@@ -2,6 +2,16 @@ package fmtinfo
 
 import "golang.org/x/text/transform"
 
+func findEOL(bytes []byte) (int, byte) {
+	for i, b := range bytes {
+		switch b {
+		case '\r', '\n':
+			return i, b
+		}
+	}
+	return len(bytes), 0
+}
+
 // EOL is type of end of line codes.
 type EOL int
 
@@ -69,7 +79,7 @@ func (t *eolTransformer) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int,
 	}
 
 	for nDst < lenDst && nSrc < lenSrc {
-		nSkip, eol := t.findEOL(src)
+		nSkip, eol := findEOL(src)
 		if nSkip > 0 {
 			m, _ := w.Write(src[0:nSkip])
 			nDst += m
@@ -105,16 +115,6 @@ func (t *eolTransformer) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int,
 
 func (t *eolTransformer) Reset() {
 	t.prevCR = false
-}
-
-func (t *eolTransformer) findEOL(bytes []byte) (int, byte) {
-	for i, b := range bytes {
-		switch b {
-		case '\r', '\n':
-			return i, b
-		}
-	}
-	return len(bytes), 0
 }
 
 type buffer struct {
