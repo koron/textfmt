@@ -42,7 +42,7 @@ func detect(r io.Reader) (*Info, error) {
 		}
 	}
 	// TODO: get result of encoding detection.
-	return &Info{Encode: enc.encoding, EOL: eol.eol}, nil
+	return &Info{Encoding: enc.encoding, EOL: eol.eol}, nil
 }
 
 type detector interface {
@@ -145,7 +145,7 @@ func (d *eolDetector) emit(eol EOL) {
 type encodingDetector struct {
 	parsing bool
 	// TODO:
-	encoding Encode
+	encoding Encoding
 }
 
 func newEncodingDetector() *encodingDetector {

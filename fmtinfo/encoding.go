@@ -6,12 +6,12 @@ import (
 	"golang.org/x/text/transform"
 )
 
-// Encode shows charset encoding.
-type Encode int
+// Encoding shows charset encoding.
+type Encoding int
 
 const (
 	// Bin means binary file.
-	Bin Encode = iota
+	Bin Encoding = iota
 	// UTF8 means UTF-8 encoding.
 	UTF8
 	// EUCJP means EUC-JP encoding.
@@ -22,8 +22,8 @@ const (
 	SHIFTJIS
 )
 
-// String returns Encode's string representation.
-func (c Encode) String() string {
+// String returns Encoding's string representation.
+func (c Encoding) String() string {
 	switch c {
 	case Bin:
 		return "binary"
@@ -40,7 +40,7 @@ func (c Encode) String() string {
 	}
 }
 
-func (c Encode) encoding() encoding.Encoding {
+func (c Encoding) encoding() encoding.Encoding {
 	switch c {
 	case EUCJP:
 		return japanese.EUCJP
@@ -53,7 +53,7 @@ func (c Encode) encoding() encoding.Encoding {
 	}
 }
 
-func (c Encode) newDecoder() transform.Transformer {
+func (c Encoding) newDecoder() transform.Transformer {
 	e := c.encoding()
 	if e == nil {
 		return nil
@@ -61,7 +61,7 @@ func (c Encode) newDecoder() transform.Transformer {
 	return e.NewDecoder()
 }
 
-func (c Encode) newEncoder() transform.Transformer {
+func (c Encoding) newEncoder() transform.Transformer {
 	e := c.encoding()
 	if e == nil {
 		return nil

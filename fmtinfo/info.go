@@ -8,16 +8,16 @@ import (
 
 // Info is text format information.
 type Info struct {
-	Encode Encode
-	EOL    EOL
+	Encoding Encoding
+	EOL      EOL
 }
 
 // String returns Info's string representation.
 func (n *Info) String() string {
-	if n.Encode == Bin {
+	if n.Encoding == Bin {
 		return "binary file"
 	}
-	return fmt.Sprintf("%s, %s", n.Encode.String(), n.EOL.String())
+	return fmt.Sprintf("%s, %s", n.Encoding.String(), n.EOL.String())
 }
 
 // Transformer build and return a transformer of text format.
@@ -26,10 +26,10 @@ func (n *Info) Transformer(to *Info) transform.Transformer {
 		return nil
 	}
 	var d, m, e transform.Transformer
-	if to.Encode != Bin {
-		if n.Encode != Bin && n.Encode != to.Encode {
-			d = n.Encode.newDecoder()
-			e = to.Encode.newEncoder()
+	if to.Encoding != Bin {
+		if n.Encoding != Bin && n.Encoding != to.Encoding {
+			d = n.Encoding.newDecoder()
+			e = to.Encoding.newEncoder()
 		}
 	}
 	if to.EOL != Mix {

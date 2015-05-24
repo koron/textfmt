@@ -23,7 +23,7 @@ const (
 	shiftjis
 )
 
-func (c enc) fmtinfo() fmtinfo.Encode {
+func (c enc) fmtinfo() fmtinfo.Encoding {
 	switch c {
 	case utf8:
 		return fmtinfo.UTF8
@@ -219,7 +219,7 @@ func procFile(path string) error {
 
 func dstInfo() *fmtinfo.Info {
 	return &fmtinfo.Info{
-		Encode: toEnc.fmtinfo(),
-		EOL:    toEOL.fmtinfo(),
+		Encoding: toEnc.fmtinfo(),
+		EOL:      toEOL.fmtinfo(),
 	}
 }
