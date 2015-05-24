@@ -42,7 +42,7 @@ func detect(r io.Reader) (*Info, error) {
 		}
 	}
 	// TODO: get result of encoding detection.
-	return &Info{Encode: enc.encode, EOL: eol.eol}, nil
+	return &Info{Encode: enc.encoding, EOL: eol.eol}, nil
 }
 
 type detector interface {
